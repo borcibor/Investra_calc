@@ -5,8 +5,22 @@
     <meta charset="UTF-8" />
   </head>
   <body>
+    <h1>Kalkulator za instalmente</h1>
+    <label for="inputValue">Celotna cena propertija:</label>
+    <input type="number" id="inputValue" />
+    <br />
+    <label for="percentage">Payment plan procent:</label>
+    <input type="number" id="percentage" />
+    <br />
+    <label for="percentageInput">Izračun vrednosti payment plana</label>
+    <input type="number" id="percentageInput" readonly />
+
+    <button onclick="calculatePercentage()">Calculate</button>
+
+    <br /><br />
+    <hr />
     <p>Vrednost preostanka plačila (odštej downpayment)</p>
-    <label for="amount">Payment amount:</label>
+    <label for="amount">Payment plan vrednost:</label>
     <input type="number" id="amount" name="amount" required />
 
     <br /><br />
@@ -27,8 +41,9 @@
     <button type="button" onclick="calculateInstalment()">
       Calculate instalment
     </button>
-
-    <div id="result"></div>
+    <br /><br />
+    <br />
+    <h3 id="result"></h3>
 
     <script>
       function calculateInstalment() {
@@ -64,6 +79,22 @@
 
       // Set the start date to today's date by default
       document.getElementById("startdate").valueAsDate = new Date();
+
+      function calculatePercentage() {
+        // Get the input element values
+        const inputValue = document.getElementById("inputValue").value;
+        const percentage = document.getElementById("percentage").value;
+
+        // Calculate the percentage value
+        const percentageValue = (inputValue * percentage) / 100;
+
+        // Update the third input field with the percentage value
+        const percentageInput = document.getElementById("percentageInput");
+        percentageInput.value = percentageValue;
+
+        const amount2 = document.getElementById("amount");
+        amount2.value = percentageValue;
+      }
     </script>
   </body>
 </html>
