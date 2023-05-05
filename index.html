@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instalment Calculator</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <label for="amount">Loan amount:</label>
+    <input type="number" id="amount" name="amount" required />
+
+    <label for="enddate">End date:</label>
+    <input type="date" id="enddate" name="enddate" required />
+
+    <label for="paymentplan">Payment plan:</label>
+    <select id="paymentplan" name="paymentplan">
+      <option value="monthly">Per month</option>
+      <option value="quarterly">Per 3 months</option>
+      <option value="biannually">Per 6 months</option>
+    </select>
+
+    <button type="button" onclick="calculateInstalment()">
+      Calculate instalment
+    </button>
+
+    <div id="result"></div>
+
+    <script>
+      function calculateInstalment() {
+        const amount = document.getElementById("amount").value;
+        const enddate = new Date(document.getElementById("enddate").value);
+        const paymentplan = document.getElementById("paymentplan").value;
+        const today = new Date();
+
+        // Calculate the number of months between today and end date
+        const monthsBetween =
+          (enddate.getFullYear() - today.getFullYear()) * 12 +
+          (enddate.getMonth() - today.getMonth());
+
+        // Calculate the number of instalments based on the selected payment plan
+        let instalments = 0;
+        if (paymentplan === "monthly") {
+          instalments = monthsBetween;
+        } else if (paymentplan === "quarterly") {
+          instalments = Math.ceil(monthsBetween / 3);
+        } else if (paymentplan === "biannually") {
+          instalments = Math.ceil(monthsBetween / 6);
+        }
+
+        // Calculate the monthly payment amount
+        const monthlyPayment = amount / instalments;
+
+        // Display the results
+        const resultElement = document.getElementById("result");
+        resultElement.innerHTML = `You need to pay ${instalments} instalments of ${monthlyPayment.toFixed(
+          2
+        )} each.`;
+      }
+
+      // Set the start date to today's date by default
+      document.getElementById("startdate").valueAsDate = new Date();
+    </script>
+  </body>
+</html>
